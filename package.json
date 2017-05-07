@@ -1,0 +1,37 @@
+{
+  "name": "logger-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SLedunois/logger-server"
+  },
+  "keywords": [
+    "logger",
+    "server"
+  ],
+  "author": "Simon LEDUNOIS <simon.ledunois@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SLedunois/logger-server/issues"
+  },
+  "homepage": "https://github.com/SLedunois/logger-server",
+  "dependencies": {
+    "angular": "^1.6.4",
+    "express": "^4.15.2",
+    "lodash": "^4.17.4",
+    "socket.io": "^1.7.3",
+    "spectre.css": "^0.2.14"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^4.3.11",
+    "webpack": "^2.5.0"
+  }
+}

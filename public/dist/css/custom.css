@@ -1,0 +1,39 @@
+body {
+    background-color: #fafafa;
+}
+
+.files--logo {
+    width: 3.2rem;
+}
+
+.container > .columns {
+    margin: 5rem auto;
+}
+
+.panel {
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.tile-content {
+    border-radius: 0.3rem;
+    padding: 0 0.5rem;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.tile-content:hover {
+    background-color: rgba(0,0,0, 0.05);
+}
+
+.logs-panel {
+    padding: 0 1rem 1rem 1rem;
+}
+
+@media (max-width: 840px) {
+    .logs-panel {
+        padding: 1rem 0;
+    }
+}
