@@ -2,6 +2,10 @@ body {
     background-color: #fafafa;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 .files--logo {
     width: 3.2rem;
 }
@@ -28,8 +32,26 @@ body {
     background-color: rgba(0,0,0, 0.05);
 }
 
-.logs-panel {
-    padding: 0 1rem 1rem 1rem;
+.logs-panel, .files-column {
+    padding: 0 1rem;
+}
+
+.logs-panel .tab-item {
+    cursor: pointer;
+}
+
+.logs-panel .tab-item button {
+    visibility: hidden;
+}
+
+.logs-panel .tab-item:hover button {
+    visibility: visible;
+}
+
+.tail.error {
+    border-left: solid 3px rgba(231, 76, 60,1.0);
+    background-color: rgba(231, 76, 60,0.2);
+    text-indent: 10px;
 }
 
 @media (max-width: 840px) {

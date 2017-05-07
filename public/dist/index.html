@@ -9,48 +9,62 @@
 </head>
 <body ng-controller="loggerCtrl" class="container centered">
 <div class="columns col-11">
-    <!-- <ul class="menu col-3">
-         <li class="menu-item">
-             <div class="tile tile-centered">
-                 <div class="tile-icon">
-                     <img src="images/files.svg" class="files--logo">
-                 </div>
-                 <div class="tile-content">
-                     Files
-                 </div>
-             </div>
-         </li>
-         <li class="divider"></li>
-         <li class="menu-item" ng-repeat="file in files">
-             <a href="#">{{file.name}}</a>
-         </li>
-     </ul>-->
-    <div class="panel col-2 column col-xl-3 col-md-12">
-        <div class="panel-header">
-            <div class="tile tile-centered">
-                <div class="tile-icon">
-                    <img src="images/files.svg" class="files--logo">
-                </div>
-                <div class="panel-title tile-content">Files</div>
-            </div>
-        </div>
-        <div class="panel-body">
-            <div ng-repeat="file in files track by $index">
-                <div class="tile">
-                    <div class="tile-content">
-                        <p class="tile-title"><a href="#">{{file.name}}</a></p>
-                        <p class="tile-subtitle">
-                            <em>IP : {{file.ip}}</em> <br />
-                            <em>File : {{file.filename}}</em>
-                        </p>
+    <div class="col-2 column col-xl-3 col-md-12 files-column">
+        <div class="panel">
+            <div class="panel-header">
+                <div class="tile tile-centered">
+                    <div class="tile-icon">
+                        <img src="images/files.svg" class="files--logo">
                     </div>
+                    <div class="panel-title tile-content">Files</div>
                 </div>
-                <div class="divider" ng-if="$index !== files.length - 1"></div>
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="file in files track by $index">
+                    <div class="tile">
+                        <div class="tile-content" ng-click="watchFile(file)">
+                            <p class="tile-title"><a>{{file.name}}</a></p>
+                            <p class="tile-subtitle">
+                                <em>IP : {{file.ip}}</em> <br />
+                                <em>File : {{file.filename}}</em>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="divider" ng-if="$index !== files.length - 1"></div>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-10 column col-xl-9 centered logs-panel col-md-12">
-        <div class="panel column col-12">Logs</div>
+        <div class="panel column col-12" ng-if="someSelectedFiles()">
+            <ul class="tab">
+                <li class="tab-item"
+                    ng-repeat="(key, val) in selectedFiles"
+                    ng-class="{ active : activeFile.id === key }"
+                    ng-click="activeFile.id = key">
+                    <a>
+                        {{val.name}}
+                        <button ng-click="removeFileWatcher(key)"
+                                class="btn btn-clear"></button>
+                    </a>
+                </li>
+            </ul>
+            <div class="divider text-center" data-content="LOGS"></div>
+            <div class="logs-content">
+                <pre class="code col-11 centered"
+                     ng-bind-html="selectedFiles[activeFile.id].htmlContent">
+                </pre>
+            </div>
+        </div>
+        <div class="empty" ng-if="!someSelectedFiles()">
+            <div class="empty-icon">
+                <img src="images/empty_state.svg" alt="No file selected">
+            </div>
+            <h4 class="empty-title">No file selected</h4>
+            <p class="empty-subtitle">
+                Select a file to start watching logs.
+            </p>
+        </div>
     </div>
 </div>
 </body>

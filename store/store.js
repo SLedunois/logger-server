@@ -1,23 +1,29 @@
 const _ = require('lodash');
 
-module.exports = {
-  store: {
-    clients: [],
-    nodes: [],
-    sockets: {}
-  },
+module.exports = {clients: [],
+  clients: [],
+  nodes: [],
+  sockets: {},
   add: function (id, node) {
     if (node.type === 'CLIENT' && !node.hasOwnProperty('files')) {
-      this.store.clients.push(id)
+      this.clients.push(id)
     } else if (node.hasOwnProperty('files')) {
-      this.store.nodes.push(id);
-      this.store.sockets[id] = node.files;
+      this.nodes.push(id);
+      this.sockets[id] = node.files;
+    }
+  },
+  remove: function (id) {
+    if (this.sockets.hasOwnProperty(id)) {
+      delete this.sockets[id];
+      this.nodes = _.without(this.nodes, id);
+    } else {
+      this.clients = _.without(this.clients, id);
     }
   },
   getFiles: function () {
     var files = [];
-    for (var key in this.store.sockets) {
-      files = _.concat(files, this.store.sockets[key]);
+    for (var key in this.sockets) {
+      files = _.concat(files, this.sockets[key]);
     }
     return files;
   }

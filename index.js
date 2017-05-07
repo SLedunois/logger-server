@@ -14,31 +14,23 @@ const Logger = require('./routes/node.socket');
 app.use(express.static(__dirname + '/public/dist'));
 app.use('/', routes);
 
+io.setMaxListeners(Infinity);
+
 // manager real time sockets
 io.sockets.on('connection', function (socket) {
+  socket.on('disconnect', function () {
+    store.remove(this.id);
+  });
 
   socket.on('config:configuration', function (configuration) {
     store.add(socket.id, configuration);
 
     if (configuration.type === 'CLIENT') {
-      new Client(socket).initSockets();
+      new Client(socket, io.sockets).init();
     } else {
-      new Logger(socket).initSockets();
+      new Logger(socket, io.sockets).init();
     }
-
-    /*socket.on('files', function (data) {
-      console.log(data);
-    });
-
-    socket.on('file:newLine', function (data) {
-      socket.emit('file:getContent', data._id);
-    });
-
-    socket.on('file:content', function (data) {
-      console.log(data);
-    });*/
   });
 
   socket.emit('config:getConfiguration');
 });
-
