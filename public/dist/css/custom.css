@@ -12,6 +12,7 @@ a:hover {
 
 .container > .columns {
     margin: 5rem auto;
+    position: relative;
 }
 
 .panel {
@@ -48,10 +49,34 @@ a:hover {
     visibility: visible;
 }
 
+.tail {
+    white-space: normal;
+}
+
 .tail.error {
     border-left: solid 3px rgba(231, 76, 60,1.0);
     background-color: rgba(231, 76, 60,0.2);
     text-indent: 10px;
+}
+
+.notifications {
+    width: 300px;
+    position: fixed;
+    right:15px;
+    top: 15px;
+    z-index: 100;
+}
+
+.notifications ul {
+    margin: 0.2rem 0 0.2rem 2rem;
+}
+
+.notifications ul li {
+    margin-top: 0;
+}
+
+.notifications .toast {
+    margin-bottom: 15px;
 }
 
 @media (max-width: 840px) {

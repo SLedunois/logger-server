@@ -19,10 +19,12 @@ Client.prototype.init = function () {
   var that = this;
   this.socket.on('client:getFileContent', function (fileId) {
     var socketId = that.getSocketId(fileId);
-    that.server.sockets[socketId].emit('file:getContent', fileId);
-    that.server.sockets[socketId].once('file:content', function (data) {
-      that.socket.emit('client:fileContent', data);
-    });
+    if (that.server.sockets.hasOwnProperty(socketId)) {
+      that.server.sockets[socketId].emit('file:getContent', fileId);
+      that.server.sockets[socketId].once('file:content', function (data) {
+        that.socket.emit('client:fileContent', data);
+      });
+    }
   });
 };
 

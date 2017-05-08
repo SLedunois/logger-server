@@ -8,6 +8,20 @@
     <script src="javascripts/bundle.js"></script>
 </head>
 <body ng-controller="loggerCtrl" class="container centered">
+<div class="notifications">
+    <div ng-repeat="notification in notifications" class="toast toast-{{notification.type}}" ng-show="notification.show">
+        <button class="btn btn-clear float-right" ng-click="dismissNotification(notification)"></button>
+        <span ng-if="notification.type === 'success'">
+        New connection found. <br /> Concerned files are :
+    </span>
+        <span ng-if="notification.type === 'error'">
+        One connection has been lost. <br /> Concerned files are :
+    </span>
+        <ul>
+            <li ng-repeat="file in notification.files">{{file.filename}}</li>
+        </ul>
+    </div>
+</div>
 <div class="columns col-11">
     <div class="col-2 column col-xl-3 col-md-12 files-column">
         <div class="panel">

@@ -17,6 +17,7 @@ app.use('/', routes);
 io.setMaxListeners(Infinity);
 
 // manager real time sockets
+store.addServer(io.sockets);
 io.sockets.on('connection', function (socket) {
   socket.on('disconnect', function () {
     store.remove(this.id);
