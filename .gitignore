@@ -39,4 +39,7 @@ jspm_packages
 # Jetbrains
 .idea/
 
+# bower
+bower_components/
+
 public/dist/javascripts

@@ -1,0 +1,24 @@
+{
+  "name": "logger-server",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Simon LEDUNOIS <simon.ledunois@gmail.com>"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "logger",
+    "server"
+  ],
+  "homepage": "https://github.com/SLedunois/logger-server",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ngSticky": "^1.8.13"
+  }
+}

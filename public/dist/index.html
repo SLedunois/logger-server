@@ -24,7 +24,7 @@
 </div>
 <div class="columns col-11">
     <div class="col-2 column col-xl-3 col-md-12 files-column">
-        <div class="panel">
+        <div class="panel" sticky offset="15">
             <div class="panel-header">
                 <div class="tile tile-centered">
                     <div class="tile-icon">
@@ -51,19 +51,21 @@
     </div>
     <div class="col-10 column col-xl-9 centered logs-panel col-md-12">
         <div class="panel column col-12" ng-if="someSelectedFiles()">
-            <ul class="tab">
-                <li class="tab-item"
-                    ng-repeat="(key, val) in selectedFiles"
-                    ng-class="{ active : activeFile.id === key }"
-                    ng-click="activeFile.id = key">
-                    <a>
-                        {{val.name}}
-                        <button ng-click="removeFileWatcher(key)"
-                                class="btn btn-clear"></button>
-                    </a>
-                </li>
-            </ul>
-            <div class="divider text-center" data-content="LOGS"></div>
+            <div class="to-stick" sticky>
+                <ul class="tab">
+                    <li class="tab-item"
+                        ng-repeat="(key, val) in selectedFiles"
+                        ng-class="{ active : activeFile.id === key }"
+                        ng-click="activeFile.id = key">
+                        <a>
+                            {{val.name}}
+                            <button ng-click="removeFileWatcher(key)"
+                                    class="btn btn-clear"></button>
+                        </a>
+                    </li>
+                </ul>
+                <div class="divider text-center" data-content="LOGS"></div>
+            </div>
             <div class="logs-content">
                 <pre class="code col-11 centered"
                      ng-bind-html="selectedFiles[activeFile.id].htmlContent">

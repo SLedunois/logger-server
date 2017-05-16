@@ -1,8 +1,9 @@
 const angular = require('angular');
+const ngSticky = require('ngSticky');
 const Io = require('socket.io-client');
 const _ = require('lodash');
 
-var app = angular.module('logger', [])
+var app = angular.module('logger', ['sticky'])
   .controller('loggerCtrl', ['$scope', '$sce', function ($scope, $sce) {
     $scope.files = [];
     var socket = Io();
