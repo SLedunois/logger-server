@@ -1,5 +1,12 @@
+html {
+    height: 100%;
+}
+
 body {
     background-color: #fafafa;
+    height: 100%;
+    min-height: 100%;
+    position: relative;
 }
 
 a:hover {
@@ -21,6 +28,10 @@ a:hover {
     background-color: #fff;
 }
 
+.panel-title:hover {
+    background-color: transparent !important;
+}
+
 .tile-content {
     border-radius: 0.3rem;
     padding: 0 0.5rem;
@@ -35,6 +46,7 @@ a:hover {
 
 .logs-panel, .files-column {
     padding: 0 1rem;
+    height: 100%;
 }
 
 .logs-panel .tab-item {
@@ -87,4 +99,31 @@ a:hover {
 
 .to-stick {
     background-color: #fff;
+}
+
+.nav {
+    cursor: pointer;
+}
+
+.nav a {
+    display: block;
+}
+
+.nav i {
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.subnav {
+    height: 0;
+    overflow: hidden;
+}
+
+.subnav.opened {
+    height: auto;
+}
+
+.plateforms-list {
+    max-height: calc(100% - 30px);
+    overflow: scroll;
 }

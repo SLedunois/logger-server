@@ -8,14 +8,14 @@ function Client (socket, server) {
 
 Client.prototype.getSocketId = function (fileId) {
   for (var socketId in store.sockets) {
-    if (_.findIndex(store.sockets[socketId], function (file) { return file._id === fileId }) !== -1) {
+    if (_.findIndex(store.sockets[socketId].files, function (file) { return file._id === fileId }) !== -1) {
       return socketId;
     }
   }
 };
 
 Client.prototype.init = function () {
-  this.socket.emit('client:files', store.getFiles());
+  this.socket.emit('client:platforms', store.getPlatforms());
   var that = this;
   this.socket.on('client:getFileContent', function (fileId) {
     var socketId = that.getSocketId(fileId);

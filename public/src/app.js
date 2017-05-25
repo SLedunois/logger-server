@@ -5,7 +5,7 @@ const _ = require('lodash');
 
 var app = angular.module('logger', ['sticky'])
   .controller('loggerCtrl', ['$scope', '$sce', function ($scope, $sce) {
-    $scope.files = [];
+    $scope.platforms = [];
     var socket = Io();
 
     $scope.selectedFiles = {};
@@ -35,12 +35,13 @@ var app = angular.module('logger', ['sticky'])
       }
     };
 
-    $scope.addNotification = function (type, files) {
+    $scope.addNotification = function (type, plateform) {
       var notification = {
         type: type,
-        files: files,
+        platformName: plateform.platformName,
         show: true
       };
+      console.log(notification);
       $scope.notifications.push(notification);
       setTimeout(function () {
         notification.show = false;
@@ -94,12 +95,15 @@ var app = angular.module('logger', ['sticky'])
       });
     });
 
-    socket.on('client:files', function (files) {
-      _.map(files, function (file) {
-        file.content = '';
-        return file.htmlContent = '';
-      });
-      $scope.files = files;
+    socket.on('client:platforms', function (platforms) {
+      for (var i = 0; i < platforms.length; i++) {
+        platforms[i].opened = false;
+        _.map(platforms[i].files, function (file) {
+          file.content = '';
+          return file.htmlContent = '';
+        });
+      }
+      $scope.platforms = platforms;
       $scope.safeApply();
     });
 
@@ -111,8 +115,8 @@ var app = angular.module('logger', ['sticky'])
       addContent(data);
     });
 
-    socket.on('client:newConnection', function (newFiles) {
-      var file, tmpFile, filesToAdd = [];
+    socket.on('client:newConnection', function (newPlatform) {
+      /*var file, tmpFile, filesToAdd = [];
       for (var i = 0; i < newFiles.length; i++) {
         file = newFiles[i];
         tmpFile = _.find($scope.files, {
@@ -138,18 +142,15 @@ var app = angular.module('logger', ['sticky'])
         $scope.files = _.concat($scope.files, filesToAdd);
         $scope.addNotification('success', filesToAdd);
       }
+      $scope.safeApply();*/
+      $scope.platforms.push(newPlatform);
+      $scope.addNotification('success', newPlatform);
       $scope.safeApply();
     });
 
-    socket.on('client:lostConnection', function (lostFiles) {
-      $scope.addNotification('error', lostFiles);
-      for (var i = 0; i < lostFiles.length; i++) {
-        if (!$scope.selectedFiles.hasOwnProperty(lostFiles[i]._id)) {
-          $scope.files = _.remove($scope.files, function (file) {
-            return file._id === lostFiles[i]._id;
-          });
-        }
-      }
+    socket.on('client:lostConnection', function (lostPlatform) {
+      $scope.addNotification('error', lostPlatform);
+      $scope.platforms = _.without($scope.platforms, _.find($scope.platforms, {platformName: lostPlatform.platformName}));
       $scope.$apply()
     });
   }]);

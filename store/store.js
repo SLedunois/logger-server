@@ -15,9 +15,12 @@ module.exports = {
       this.clients.push(id)
     } else if (node.hasOwnProperty('files')) {
       this.nodes.push(id);
-      this.sockets[id] = node.files;
+      this.sockets[id] = {
+        platformName: node.platformName,
+        files: node.files
+      };
       for (var i = 0; i < this.clients.length; i++) {
-        this.server.sockets[this.clients[i]].emit('client:newConnection', node.files);
+        this.server.sockets[this.clients[i]].emit('client:newConnection', node);
       }
     }
   },
@@ -27,11 +30,11 @@ module.exports = {
    */
   remove: function (id) {
     if (this.sockets.hasOwnProperty(id)) {
-      var files = this.sockets[id];
+      var platform = this.sockets[id];
       delete this.sockets[id];
       this.nodes = _.without(this.nodes, id);
       for (var i = 0; i < this.clients.length; i++) {
-        this.server.sockets[this.clients[i]].emit('client:lostConnection', files);
+        this.server.sockets[this.clients[i]].emit('client:lostConnection', platform);
       }
     } else {
       this.clients = _.without(this.clients, id);
@@ -41,12 +44,12 @@ module.exports = {
    * Return all files in the store
    * @returns {Array} files
    */
-  getFiles: function () {
-    var files = [];
+  getPlatforms: function () {
+    var plateforms = [];
     for (var key in this.sockets) {
-      files = _.concat(files, this.sockets[key]);
+      plateforms.push(this.sockets[key]);
     }
-    return files;
+    return plateforms;
   },
   /**
    * Store the socket server

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Logger Server</title>
     <link rel="stylesheet" href="css/spectre.min.css">
+    <link rel="stylesheet" href="css/spectre-icons.css">
     <link rel="stylesheet" href="css/custom.css">
     <script src="javascripts/bundle.js"></script>
 </head>
@@ -12,29 +13,27 @@
     <div ng-repeat="notification in notifications" class="toast toast-{{notification.type}}" ng-show="notification.show">
         <button class="btn btn-clear float-right" ng-click="dismissNotification(notification)"></button>
         <span ng-if="notification.type === 'success'">
-        New connection found. <br /> Concerned files are :
+        New connection found. <br />
     </span>
         <span ng-if="notification.type === 'error'">
-        One connection has been lost. <br /> Concerned files are :
+        One connection has been lost. <br />
     </span>
-        <ul>
-            <li ng-repeat="file in notification.files">{{file.filename}}</li>
-        </ul>
+    <span>Concerned platform is : {{notification.platformName}}</span>
     </div>
 </div>
 <div class="columns col-11">
     <div class="col-2 column col-xl-3 col-md-12 files-column">
-        <div class="panel" sticky offset="15">
+        <div class="panel plateforms-list" sticky offset="15">
             <div class="panel-header">
                 <div class="tile tile-centered">
                     <div class="tile-icon">
                         <img src="images/files.svg" class="files--logo">
                     </div>
-                    <div class="panel-title tile-content">Files</div>
+                    <div class="panel-title tile-content">Platforms</div>
                 </div>
             </div>
             <div class="panel-body">
-                <div ng-repeat="file in files track by $index">
+                <!--<div ng-repeat="file in files">
                     <div class="tile">
                         <div class="tile-content" ng-click="watchFile(file)">
                             <p class="tile-title"><a>{{file.name}}</a></p>
@@ -45,7 +44,23 @@
                         </div>
                     </div>
                     <div class="divider" ng-if="$index !== files.length - 1"></div>
-                </div>
+                </div>-->
+                <ul class="nav">
+                    <li class="nav-item" ng-repeat="platform in platforms | orderBy:'platformName'">
+                        <a ng-click="platform.opened = !platform.opened">
+                            {{platform.platformName}}
+                            <i class="icon float-right"
+                               ng-class="{'icon-arrow-right': !platform.opened,
+                               'icon-arrow-up': platform.opened}"></i>
+                        </a>
+                        <ul class="nav subnav" ng-class="{opened: platform.opened}">
+                            <li class="nav-item" ng-click="watchFile(file)" ng-repeat="file in platform.files">
+                                <a>{{file.filename}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
             </div>
         </div>
     </div>
