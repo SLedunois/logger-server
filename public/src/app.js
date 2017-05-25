@@ -11,6 +11,9 @@ var app = angular.module('logger', ['sticky'])
     $scope.selectedFiles = {};
     $scope.activeFile = {};
     $scope.notifications = [];
+    $scope.options = {
+      autoScroll: true
+    };
 
     $scope.someSelectedFiles = function () {
       return Object.keys($scope.selectedFiles).length > 0;
@@ -33,6 +36,10 @@ var app = angular.module('logger', ['sticky'])
       } else {
         $scope.activeFile.id = file._id;
       }
+      setTimeout(function () {
+        autoScroll();
+        $scope.safeApply();
+      }, 150)
     };
 
     $scope.addNotification = function (type, plateform) {
@@ -89,6 +96,15 @@ var app = angular.module('logger', ['sticky'])
       }
     };
 
+    var autoScroll = function () {
+      if (!$scope.options.autoScroll) return;
+      $scope.scrollBottom();
+    };
+
+    $scope.scrollBottom = function () {
+      window.scrollTo(0,document.body.scrollHeight);
+    };
+
     socket.on('config:getConfiguration', function () {
       socket.emit('config:configuration', {
         type: 'CLIENT'
@@ -109,10 +125,12 @@ var app = angular.module('logger', ['sticky'])
 
     socket.on('client:fileContent', function (data) {
       addContent(data);
+      autoScroll();
     });
 
     socket.on('client:newLine', function (data) {
       addContent(data);
+      autoScroll();
     });
 
     socket.on('client:newConnection', function (newPlatform) {

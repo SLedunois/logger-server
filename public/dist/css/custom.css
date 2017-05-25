@@ -127,3 +127,9 @@ a:hover {
     max-height: calc(100% - 30px);
     overflow: scroll;
 }
+
+#scrollButton {
+    position: fixed;
+    bottom: 5rem;
+    right: 2.5rem;
+}

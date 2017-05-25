@@ -67,6 +67,15 @@
     <div class="col-10 column col-xl-9 centered logs-panel col-md-12">
         <div class="panel column col-12" ng-if="someSelectedFiles()">
             <div class="to-stick" sticky>
+                <div class="options pt-5">
+                    <div class="form-group text-right">
+                        <label class="form-switch">
+                            <input type="checkbox" ng-model="options.autoScroll"/>
+                            <i class="form-icon"></i>
+                            Autoscroll
+                        </label>
+                    </div>
+                </div>
                 <ul class="tab">
                     <li class="tab-item"
                         ng-repeat="(key, val) in selectedFiles"
@@ -98,5 +107,10 @@
         </div>
     </div>
 </div>
+<button class="btn btn-action btn-primary btn-lg"
+        id="scrollButton"
+        ng-click="scrollBottom()">
+    <i class="icon icon-arrow-down"></i>
+</button>
 </body>
 </html>
